@@ -1,0 +1,24 @@
+{
+    "development": {
+        "username": "postgres",
+        "password": "postgres",
+        "database": "sgia_dev",
+        "host"    : "localhost",
+        "dialect" : "postgres",
+        "timezone": "America/Bogota"
+    },
+    "production": {
+        "username": "shiny",
+        "password": "XIeoJw0rskJZz7SCbqj2oe0uZ3g3skVw",
+        "database": "shiny_desk_ble6",
+        "host"    : "oregon-postgres.render.com",
+        "dialect" : "postgres",
+        "timezone": "America/Bogota",
+        "dialectOptions": {
+            "ssl": {
+                "require": true,
+                "rejectUnauthorized": false
+            }
+        }
+    }
+}
