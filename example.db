@@ -1,0 +1,255 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 31-08-2024 a las 15:02:45
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `sgia`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `almacen`
+--
+
+CREATE TABLE `almacen` (
+  `id_almacen` int(11) NOT NULL,
+  `regional` varchar(255) NOT NULL,
+  `centro` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `herramienta`
+--
+
+CREATE TABLE `herramienta` (
+  `id_herramienta` int(11) NOT NULL,
+  `id_almacen` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `categoria` varchar(255) NOT NULL,
+  `marca` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pazysalvo`
+--
+
+CREATE TABLE `pazysalvo` (
+  `id_pazysalvo` int(11) NOT NULL,
+  `fecha_generacion` date NOT NULL,
+  `estado` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `penalizacion`
+--
+
+CREATE TABLE `penalizacion` (
+  `id_pen` int(11) NOT NULL,
+  `fecha_pen` date NOT NULL,
+  `estado_pen` varchar(255) NOT NULL,
+  `motivo_pen` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `prestamo`
+--
+
+CREATE TABLE `prestamo` (
+  `id_prestamo` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `fecha_prestamo` date NOT NULL,
+  `fecha_devolucion` date DEFAULT NULL,
+  `estado` varchar(255) NOT NULL,
+  `id_pen` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `prestamoxherramienta`
+--
+
+CREATE TABLE `prestamoxherramienta` (
+  `id` int(11) NOT NULL,
+  `fecha` date DEFAULT NULL,
+  `id_prestamo` int(11) NOT NULL,
+  `id_herramienta` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuario`
+--
+
+CREATE TABLE `usuario` (
+  `id_usuario` int(11) NOT NULL,
+  `identificador` int(11) NOT NULL,
+  `nombre_completo` varchar(255) NOT NULL,
+  `documento` varchar(255) NOT NULL,
+  `correo` varchar(255) NOT NULL,
+  `telefono` varchar(255) NOT NULL,
+  `contrasena` varchar(255) NOT NULL,
+  `privilegios` varchar(255) NOT NULL,
+  `estado` varchar(255) NOT NULL,
+  `id_pazysalvo` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `almacen`
+--
+ALTER TABLE `almacen`
+  ADD PRIMARY KEY (`id_almacen`);
+
+--
+-- Indices de la tabla `herramienta`
+--
+ALTER TABLE `herramienta`
+  ADD PRIMARY KEY (`id_herramienta`),
+  ADD KEY `id_almacen` (`id_almacen`);
+
+--
+-- Indices de la tabla `pazysalvo`
+--
+ALTER TABLE `pazysalvo`
+  ADD PRIMARY KEY (`id_pazysalvo`);
+
+--
+-- Indices de la tabla `penalizacion`
+--
+ALTER TABLE `penalizacion`
+  ADD PRIMARY KEY (`id_pen`);
+
+--
+-- Indices de la tabla `prestamo`
+--
+ALTER TABLE `prestamo`
+  ADD PRIMARY KEY (`id_prestamo`),
+  ADD KEY `id_pen` (`id_pen`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+--
+-- Indices de la tabla `prestamoxherramienta`
+--
+ALTER TABLE `prestamoxherramienta`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_prestamo` (`id_prestamo`),
+  ADD KEY `id_herramienta` (`id_herramienta`);
+
+--
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id_usuario`),
+  ADD UNIQUE KEY `documento` (`documento`),
+  ADD KEY `id_pazysalvo` (`id_pazysalvo`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `almacen`
+--
+ALTER TABLE `almacen`
+  MODIFY `id_almacen` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `herramienta`
+--
+ALTER TABLE `herramienta`
+  MODIFY `id_herramienta` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `pazysalvo`
+--
+ALTER TABLE `pazysalvo`
+  MODIFY `id_pazysalvo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `penalizacion`
+--
+ALTER TABLE `penalizacion`
+  MODIFY `id_pen` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `prestamo`
+--
+ALTER TABLE `prestamo`
+  MODIFY `id_prestamo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `prestamoxherramienta`
+--
+ALTER TABLE `prestamoxherramienta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `herramienta`
+--
+ALTER TABLE `herramienta`
+  ADD CONSTRAINT `herramienta_ibfk_1` FOREIGN KEY (`id_almacen`) REFERENCES `almacen` (`id_almacen`);
+
+--
+-- Filtros para la tabla `prestamo`
+--
+ALTER TABLE `prestamo`
+  ADD CONSTRAINT `prestamo_ibfk_1` FOREIGN KEY (`id_pen`) REFERENCES `penalizacion` (`id_pen`),
+  ADD CONSTRAINT `prestamo_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
+
+--
+-- Filtros para la tabla `prestamoxherramienta`
+--
+ALTER TABLE `prestamoxherramienta`
+  ADD CONSTRAINT `prestamoxherramienta_ibfk_1` FOREIGN KEY (`id_prestamo`) REFERENCES `prestamo` (`id_prestamo`),
+  ADD CONSTRAINT `prestamoxherramienta_ibfk_2` FOREIGN KEY (`id_herramienta`) REFERENCES `herramienta` (`id_herramienta`);
+
+--
+-- Filtros para la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_pazysalvo`) REFERENCES `pazysalvo` (`id_pazysalvo`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
