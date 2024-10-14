@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const create = async (
     name,
     lastName,
+    document,
     email,
     password,
     status,
@@ -17,6 +18,7 @@ const create = async (
         const user = await db.User.create({
             name,
             lastName,
+            document,
             email,
             password: hashedPassword,
             status,

@@ -44,9 +44,9 @@ const getByUser = async (req, res) => {
 
 const create = async (req, res) => { 
     console.log(req.body); 
-    const { loanDate,loanRetrieve,status,userId } = req.body;
+    const { loanDate, tool, loanRetrieve,status,userId,sanctionId } = req.body;
     try {
-        const create = await loanService.create(loanDate,loanRetrieve,status,userId);
+        const create = await loanService.create(loanDate, tool, loanRetrieve,status,userId, sanctionId);
         res.status(200).send({ status: 200, data: create })
     } catch (error) {
         res.status(error.status || 500).send({ status: "FAILED", data: error.message })

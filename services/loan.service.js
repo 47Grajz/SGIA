@@ -3,16 +3,20 @@ const db = require("../models");
 
 const create = async (
     loanDate,
+    tool,
     loanRetrieve,       
     status,
     userId,
+    sanctionId,
 ) => {
     try {
         const loan = await db.Loan.create({
             loanDate,
+            tool,
             loanRetrieve,
             status,
-            userId
+            userId,
+            sanctionId
         });
         return loan;
     } catch (error) {

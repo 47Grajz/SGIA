@@ -30,9 +30,9 @@ const getAll = async (req, res) => {
 
 const create = async (req, res) => { 
     console.log(req.body); 
-    const { name, lastName, email, password, status, phoneNumber } = req.body;
+    const { name, lastName, document, email, password, status, phoneNumber } = req.body;
     try {
-        const create = await userServices.create(name, lastName, email, password, status, phoneNumber);
+        const create = await userServices.create(name, lastName, document, email, password, status, phoneNumber);
         res.status(200).send({ status: 200, data: create })
     } catch (error) {
         res.status(error.status || 500).send({ status: "FAILED", data: error.message })
