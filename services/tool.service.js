@@ -22,23 +22,27 @@ const create = async (
     }
 };
 
+const  getLoanTools = async () => {
+    try {
+        const tools = await db.Loan_Tools.findAll({
+        });
+        return tools;
+    } catch (error) {
+        console.error("Error fetching loanTools:", error);
+        throw error;
+    }
+}
+
 const getAll = async () => {
 
     try {
         const tools = await db.Tool.findAll({
-            include: [{
-                model: db.Loan,
-                required: false,
-                as: "user",
-                attributes: ["tool"],
-            },
-            ]
         });
         return tools;
     } catch (error) {
-        console.error("Error fetching loans:", error);
+        console.error("Error fetching tools:", error);
         throw error;
     }
 };
 
-module.exports = { create, getAll, getByUser };
+module.exports = { create, getAll, getLoanTools };

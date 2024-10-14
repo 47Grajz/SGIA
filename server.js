@@ -21,6 +21,7 @@ app.use(morgan('dev'))
 
 //Rutas
 app.use('/api/v1/users', require('./routes/user.routes')); 
+app.use('/api/v1/tools', require('./routes/tool.routes')); 
 
 
 app.listen(app.get('port'), () => { // correr el servidor

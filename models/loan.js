@@ -22,11 +22,16 @@ module.exports = (sequelize, DataTypes) => {
         as: 'user'
 
       });
+
+      Loan.belongsToMany(models.Tool, {
+        through: 'LoanTools',
+        as: 'tools',
+        foreignKey: 'loanId'
+      });
     }
   }
 
   Loan.init({
-    tool        : DataTypes.STRING,
     loanDate    : DataTypes.DATE,
     loanRetrieve: DataTypes.DATE,
     status      : DataTypes.STRING,
@@ -36,7 +41,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-
         model : 'Users',
         key   : 'id'
       }

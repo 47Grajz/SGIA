@@ -55,4 +55,22 @@ const getAll = async () => {
     }
   };
 
-module.exports = { create, getAll, getByUser };
+
+  const getAllLoansWithTools = async () => {
+    try {
+      const loans = await db.Loan.findAll({
+        include: [{
+          model: db.Tool,
+          as: 'tools',
+          through: { attributes: [] },
+          attributes: ['name', 'description']
+        }]
+      });
+      return loans;
+    } catch (error) {
+      console.error("Error fetching loans with tools:", error);
+      throw error;
+    }
+  };
+  
+module.exports = { create, getAll, getByUser, getAllLoansWithTools };
